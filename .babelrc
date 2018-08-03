@@ -6,7 +6,8 @@
         "modules": false,
         "useBuiltIns": true
       }
-    ]
+    ],
+    "react"
   ],
   "plugins": [
     "babel-plugin-root-import",
