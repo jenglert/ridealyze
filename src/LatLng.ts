@@ -1,6 +1,15 @@
 import _ from 'lodash';
 
-class LatLng {
+interface ILatLng {
+    lat: number;
+    lng: number;
+}
+
+class LatLng implements ILatLng{
+
+    lat = 0;
+    lng = 0;
+
     constructor(...args) {
 
         if (args.length == 1) {
@@ -21,7 +30,7 @@ class LatLng {
             this.lat = args[0];
             this.lng = args[1];
         } else {
-            throw new Erorr('Unable to create latLng from: (' + args[0] + ', ' + args[1] + ')');
+            throw new Error('Unable to create latLng from: (' + args[0] + ', ' + args[1] + ')');
         }
     }
 

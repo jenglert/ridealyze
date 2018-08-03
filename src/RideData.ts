@@ -1,6 +1,10 @@
 import _ from 'lodash';
 
 class RideData {
+    ridePointAccum = null as any;
+    records = null as any;
+    speedsToBands = null as any;
+
     constructor(ridePointAccum, records) {
         this.ridePointAccum = ridePointAccum;
         this.records = records;
@@ -22,13 +26,14 @@ class RideData {
 
         Object.keys(speedsToBands).forEach(function (fSpeed) {
             const band = speedsToBands[fSpeed];
+            const fSpeedNum = Number.parseFloat(fSpeed); // Remove the cast
 
-            if (fSpeed > finalResult[band].max) {
-                finalResult[band].max = fSpeed;
+            if (fSpeedNum > finalResult[band].max) {
+                finalResult[band].max = fSpeedNum;
             }
 
-            if (fSpeed < finalResult[band].min) {
-                finalResult[band].min = fSpeed;
+            if (fSpeedNum < finalResult[band].min) {
+                finalResult[band].min = fSpeedNum;
             }
         });
 

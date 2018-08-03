@@ -1,4 +1,10 @@
 class RidePointAccum {
+
+    maxSpeed: number;
+    minSpeed: number;
+    speedDist: any;
+    totalPoints: number;
+
     constructor() {
         this.maxSpeed = 0;
         this.minSpeed = 99999;

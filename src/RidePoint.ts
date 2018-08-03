@@ -1,6 +1,11 @@
 import LatLng from './LatLng';
 
 class RidePoint {
+
+    speed: any;
+    fSpeed: any;
+    latLng: any;
+
     /*
     {   
         timestamp: 2018-06-25T16:01:28.000Z,

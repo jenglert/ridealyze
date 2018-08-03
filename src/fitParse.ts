@@ -6,7 +6,8 @@ import RidePointAccum from './RidePointAccum';
 import RidePoint from './RidePoint';
 import RideData from './RideData';
 
-export const readFit = (filename) => {
+type ReadFitFunc = (filename: string) => any;
+export const readFit: ReadFitFunc = (filename) => {
     const promise = new Promise((resolve, reject) => {
 
         fs.readFile(filename, function (err, content) {
