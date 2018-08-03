@@ -4,23 +4,55 @@ class RideData {
     constructor(ridePointAccum, records) {
         this.ridePointAccum = ridePointAccum;
         this.records = records;
+        this.speedsToBands = this.ridePointAccum.bands(RideData.colors().length);
     }
 
-    recordsByBand() {
-        const speedsToBands = this.ridePointAccum.bands(RideData.colors().length);
+    /**
+     * @returns array of objects w/ {color, max, min}
+     */
+    colorsToSpeedRanges() {
+        var finalResult = RideData.colors().map(color => {
+            return {
+                color: color,
+                max: -1,
+                min: 9999999,
+            }
+        });
+        var speedsToBands = this.speedsToBands;
+
+        Object.keys(speedsToBands).forEach(function (fSpeed) {
+            const band = speedsToBands[fSpeed];
+
+            if (fSpeed > finalResult[band].max) {
+                finalResult[band].max = fSpeed;
+            }
+
+            if (fSpeed < finalResult[band].min) {
+                finalResult[band].min = fSpeed;
+            }
+        });
+
+        return finalResult;
+    }
+
+    recordsByBand(from = 0, to = this.records.length) {
         var results = [];
         var resultsInCurrentBand = [];
-        var currentBand = speedsToBands[this.records[0].fSpeed];
+        var currentBand = this.speedsToBands[this.records[0].fSpeed];
 
-        for (var i = 0; i < this.records.length; i++) {
+        for (var i = from; i < to; i++) {
             const record = this.records[i];
-            const recordBand = speedsToBands[this.records[i].fSpeed];
+            const recordBand = this.speedsToBands[this.records[i].fSpeed];
 
             if (currentBand == recordBand) {
                 resultsInCurrentBand.push(record);
             } else {
                 const resultsInCurrentBandAsString = '[' + _.map(resultsInCurrentBand, (r) => r.latLng.googleString()).join(', ') + ']';
-                results.push([RideData.colors()[currentBand], resultsInCurrentBandAsString]);
+                results.push({
+                    color: RideData.colors()[currentBand],
+                    recordCount: resultsInCurrentBand.length,
+                    googleString: resultsInCurrentBandAsString,
+                });
                 resultsInCurrentBand = [record];
                 currentBand = recordBand;
             }

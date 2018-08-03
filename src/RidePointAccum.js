@@ -26,6 +26,9 @@ class RidePointAccum {
         }
     }
 
+    /**
+     * @returns maps of speed -> bandIndex (0, 1, 2, ... MAX_BAND)
+     */
     bands(numBands) {
         const pointsPerBand = Math.floor(this.totalPoints / numBands);
         var pointsUsedInBand = 0;
