@@ -13,6 +13,20 @@
             height: 100%;
         }
 
+        #legend { 
+            border: 1px solid gray;
+            padding: 5px;
+            background-color: #00000088;
+            text-align: center;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        #legend H4 { 
+            margin: 0 0 5px 0;
+            color: white;
+        }
+
         /* Optional: Makes the sample page fill the window. */
 
         html,
@@ -26,7 +40,7 @@
 
 <body>
     <div id="map"></div>
-    <div id="legend"><h3>Legend</h3></div>
+    <div id="legend"><h4>Legend</h4></div>
     <script>
 
         function calculateZoom() {
@@ -92,7 +106,7 @@
                 var max = colorsToSpeeds[i].max;
             %> 
                 var div = document.createElement('div');
-                div.innerHTML = "<div class='legend-item'><%=color%><%=min%><%=max%></div>";
+                div.innerHTML =  "<%- include('partials/legendEntry', { color: color, min: min, max: max }); %>";
                 legend.appendChild(div);
 
             <% } %>
