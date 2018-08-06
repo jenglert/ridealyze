@@ -4,11 +4,12 @@ import _ from 'lodash';
 import LatLng from './LatLng';
 import RidePointAccum from './RidePointAccum';
 import RidePoint from './RidePoint';
-import RideData from './RideData';
+import RideData, { IRideData } from './RideData';
+import { ILatLng } from './LatLng';
 
-type ReadFitFunc = (filename: string) => any;
+type ReadFitFunc = (filename: string) => Promise<IRideData>;
 export const readFit: ReadFitFunc = (filename) => {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise<IRideData>((resolve, reject) => {
 
         fs.readFile(filename, function (err, content) {
 
@@ -57,7 +58,21 @@ export const readFit: ReadFitFunc = (filename) => {
     return promise;
 };
 
-export const boundingBox = (results) => {
+type RawLatLng = {
+    latLng: {
+        lat: number;
+        lng: number;
+    };
+}
+
+interface BoundingBoxResult {
+    max: ILatLng;
+    min: ILatLng;
+    avg: ILatLng;
+}
+
+type BoundingBoxFunc = (latLngs: Array<RawLatLng>) => BoundingBoxResult;
+export const boundingBox: BoundingBoxFunc = (results) => {
     const min = { lat: 999, lng: 999 };
     const max = { lat: -999, lng: -999 };
 

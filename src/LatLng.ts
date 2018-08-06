@@ -1,11 +1,13 @@
 import _ from 'lodash';
 
-interface ILatLng {
+export interface ILatLng {
     lat: number;
     lng: number;
+
+    googleString: () => string;
 }
 
-class LatLng implements ILatLng{
+class LatLng implements ILatLng {
 
     lat = 0;
     lng = 0;

@@ -1,6 +1,21 @@
 import _ from 'lodash';
 
-class RideData {
+interface IColorToSpeedBand { 
+    color: string;
+    max: number;
+    min: number;
+}
+
+export interface IRideData { 
+    ridePointAccum: any;
+    records: any;
+    speedsToBands: any;
+
+    colorsToSpeedRanges: () => IColorToSpeedBand[];
+    recordsByBand: (from: number, to: number) => any;
+}
+
+class RideData implements IRideData {
     ridePointAccum = null as any;
     records = null as any;
     speedsToBands = null as any;
