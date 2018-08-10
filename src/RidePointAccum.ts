@@ -1,8 +1,15 @@
-class RidePointAccum {
+import RidePoint from './RidePoint';
+
+interface IRidePointAccum {
+    accum: (ridepoint: RidePoint) => void;
+    bands: (numBands: number) => {[speed: number]: number};
+}
+
+class RidePointAccum implements IRidePointAccum {
 
     maxSpeed: number;
     minSpeed: number;
-    speedDist: any;
+    speedDist: {[fSpeed: number]: number};
     totalPoints: number;
 
     constructor() {

@@ -12,6 +12,8 @@ class LatLng implements ILatLng {
     lat = 0;
     lng = 0;
 
+    // TODO: it's super unclear to me why we support so many constructor forms.  Or whether they
+    //       are actually used.
     constructor(...args) {
 
         if (args.length == 1) {

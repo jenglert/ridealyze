@@ -1,10 +1,16 @@
-import LatLng from './LatLng';
+import LatLng, { ILatLng } from './LatLng';
 
 class RidePoint {
 
-    speed: any;
-    fSpeed: any;
-    latLng: any;
+    speed: number;
+    fSpeed: number;
+    latLng: ILatLng;
+
+    constructor({speed, lat, lng}) {
+        this.speed = speed;
+        this.fSpeed = Math.floor(speed);
+        this.latLng = new LatLng(lat, lng);
+    }
 
     /*
     {   
@@ -26,10 +32,13 @@ class RidePoint {
         fractional_cadence: 0 
     }
     */
-    constructor(fitRecord) {
-        this.speed = fitRecord.speed;
-        this.fSpeed = Math.floor(fitRecord.speed);
-        this.latLng = new LatLng(fitRecord);
+
+    static fromFitRecord(fitRecord: any) {
+        return new RidePoint({
+            speed: fitRecord.speed,
+            lat: fitRecord.position_lat,
+            lng: fitRecord.position_long
+        });
     }
 }
 
