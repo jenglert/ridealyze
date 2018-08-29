@@ -49,14 +49,15 @@ class RidePointAccum implements IRidePointAccum {
         var currentBand = 0;
 
         for (var speed = Math.floor(this.minSpeed); speed <= Math.floor(this.maxSpeed); speed++) {
-            const pointsAtSpeed = this.speedDist[speed];
+            const pointsAtSpeed = this.speedDist[speed] || 0;
             pointsUsedInBand = pointsUsedInBand + pointsAtSpeed;
-            finalResults[speed] = currentBand;
 
             if (pointsUsedInBand > pointsPerBand) {
                 pointsUsedInBand = 0;
                 currentBand++;
             }
+            
+            finalResults[speed] = currentBand;
         }
 
         return finalResults;

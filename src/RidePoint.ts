@@ -1,6 +1,6 @@
 import LatLng, { ILatLng } from './LatLng';
 
-class RidePoint {
+export default class RidePoint {
 
     speed: number;
     fSpeed: number;
@@ -41,5 +41,3 @@ class RidePoint {
         });
     }
 }
-
-export default RidePoint;
