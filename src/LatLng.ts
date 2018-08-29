@@ -1,16 +1,9 @@
 import _ from 'lodash';
 
-export interface ILatLng {
-    lat: number;
-    lng: number;
+class LatLng {
 
-    googleString: () => string;
-}
-
-class LatLng implements ILatLng {
-
-    lat = 0;
-    lng = 0;
+    lat: number = 0;
+    lng: number = 0;
 
     // TODO: it's super unclear to me why we support so many constructor forms.  Or whether they
     //       are actually used.
@@ -38,7 +31,7 @@ class LatLng implements ILatLng {
         }
     }
 
-    googleString() {
+    googleString(): string {
         return JSON.stringify({
             lat: this.lat,
             lng: this.lng

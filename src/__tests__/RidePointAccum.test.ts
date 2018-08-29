@@ -48,5 +48,5 @@ const accumSpeeds = (speeds: number[]): RidePointAccum => {
 };
 
 const makeRidePoint = (speed= 20, lat = 19.5, lng = 12.3) => {
-    return new RidePoint({speed, lat, lng});
+    return new RidePoint(speed, lat, lng);
 };

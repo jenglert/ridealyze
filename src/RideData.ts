@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { IRidePointAccum } from './RidePointAccum';
+import RidePoint from './RidePoint';
 
 interface IColorToSpeedBand { 
     color: string;
@@ -6,19 +8,25 @@ interface IColorToSpeedBand {
     min: number;
 }
 
+interface RecordByBand { 
+    color: string;
+    recordCount: number;
+    googleString: string;
+}
+
 export interface IRideData { 
-    ridePointAccum: any;
-    records: any;
-    speedsToBands: any;
+    ridePointAccum: IRidePointAccum;
+    records: RidePoint[];
+    speedsToBands: {[speed: number]: number};
 
     colorsToSpeedRanges: () => IColorToSpeedBand[];
-    recordsByBand: (from: number, to: number) => any;
+    recordsByBand: (from: number, to: number) => RecordByBand[];
 }
 
 class RideData implements IRideData {
-    ridePointAccum = null as any;
-    records = null as any;
-    speedsToBands = null as any;
+    ridePointAccum = null as IRidePointAccum;
+    records = null as RidePoint[];
+    speedsToBands = null as {[speed: number]: number};
 
     constructor(ridePointAccum, records) {
         this.ridePointAccum = ridePointAccum;
@@ -56,18 +64,17 @@ class RideData implements IRideData {
     }
 
     recordsByBand(from = 0, to = this.records.length) {
-        var results = [];
-        var resultsInCurrentBand = [];
+        var results: RecordByBand[] = [];
+        var resultsInCurrentBand: RidePoint[] = [];
         var currentBand = this.speedsToBands[this.records[0].fSpeed];
 
         for (var i = from; i < to; i++) {
             const record = this.records[i];
             const recordBand = this.speedsToBands[this.records[i].fSpeed];
-
             if (currentBand == recordBand) {
                 resultsInCurrentBand.push(record);
             } else {
-                const resultsInCurrentBandAsString = '[' + _.map(resultsInCurrentBand, (r) => r.latLng.googleString()).join(', ') + ']';
+                const resultsInCurrentBandAsString = '[' + _.map(resultsInCurrentBand, r => r.latLng.googleString()).join(', ') + ']';
                 results.push({
                     color: RideData.colors()[currentBand],
                     recordCount: resultsInCurrentBand.length,

@@ -34,8 +34,6 @@ app.get('/maps', async (req, res) => {
     const recordsByBand = rideData.recordsByBand(from, to);
     const colorsToSpeeds = rideData.colorsToSpeedRanges();
 
-    console.log('colorsToSpeeds', colorsToSpeeds);
-
     res.render('maps', {
         center: avg,
         min,

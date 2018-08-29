@@ -1,6 +1,6 @@
 import RidePoint from './RidePoint';
 
-interface IRidePointAccum {
+export interface IRidePointAccum {
     accum: (ridepoint: RidePoint) => void;
     bands: (numBands: number) => {[speed: number]: number};
 }

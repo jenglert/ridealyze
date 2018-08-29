@@ -5,7 +5,6 @@ import LatLng from './LatLng';
 import RidePointAccum from './RidePointAccum';
 import RidePoint from './RidePoint';
 import RideData, { IRideData } from './RideData';
-import { ILatLng } from './LatLng';
 
 type ReadFitFunc = (filename: string) => Promise<IRideData>;
 export const readFit: ReadFitFunc = (filename) => {
@@ -34,18 +33,19 @@ export const readFit: ReadFitFunc = (filename) => {
                 if (error) {
                     reject(error);
                 } else {
-                    var records = [];
+                    var records: RidePoint[] = [];
                     const rpa = new RidePointAccum();
 
                     for (var i = 0; i < data.activity.sessions.length; i++) {
                         const session = data.activity.sessions[i];
                         for (var lapcnt = 0; lapcnt < session.laps.length; lapcnt++) {
                             const lap = session.laps[lapcnt];
-                            records = records.concat(_.map(lap.records, function (r) {
-                                const rp = new RidePoint(r);
+                            records = [...records, ..._.map(lap.records, function (r) {
+                                console.log('r', r);
+                                const rp = new RidePoint(r.speed, r.position_lat, r.position_long);
                                 rpa.accum(rp);
                                 return rp;
-                            }));
+                            })];
                         }
                     }
 
@@ -66,9 +66,9 @@ type RawLatLng = {
 }
 
 interface BoundingBoxResult {
-    max: ILatLng;
-    min: ILatLng;
-    avg: ILatLng;
+    max: LatLng;
+    min: LatLng;
+    avg: LatLng;
 }
 
 type BoundingBoxFunc = (latLngs: Array<RawLatLng>) => BoundingBoxResult;

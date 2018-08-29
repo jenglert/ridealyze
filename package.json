@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "start:server": "rimraf ./build && webpack --config webpack.config.server.js --mode development",
+    "start": "rimraf ./build && webpack --config webpack.config.server.js --mode development",
     "tsc": "npx tsc"
   },
   "repository": {

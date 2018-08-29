@@ -30,7 +30,7 @@ describe('RidePoint', () => {
     });
 
     it('can be instantiated via constructor', () => {
-        const result = new RidePoint({speed: 20.5, lat: 88, lng: 25});
+        const result = new RidePoint(20.5, 88, 25);
 
         expect(result.fSpeed).toEqual(20);
         expect(result.latLng.lat).toEqual(88);
