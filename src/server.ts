@@ -4,7 +4,7 @@ import { boundingBox, readFit } from './fitParse';
 
 const app = express();
 
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 app.use(morgan('combined'));
 
 // 45 minutes - 1 record per second
@@ -13,14 +13,14 @@ const pageSize = 60 * 45;
 app.get('/maps', async (req, res) => {
     const filename = req.param('filename');
     if (!filename) {
-        res.statusMessage = "Filename is a required parameter";
+        res.statusMessage = 'Filename is a required parameter';
         res.status(400).end();
         return;
     }
 
     const slice = req.param('slice');
     if (!slice) {
-        res.statusMessage = "Slice is a required parameter";
+        res.statusMessage = 'Slice is a required parameter';
         res.status(400).end();
         return;
     }
@@ -39,8 +39,8 @@ app.get('/maps', async (req, res) => {
         min,
         max,
         recordsByBand,
-        colorsToSpeeds
+        colorsToSpeeds,
     });
 });
 
-export default app
+export default app;

@@ -24,9 +24,13 @@ export interface IRideData {
 }
 
 class RideData implements IRideData {
-    ridePointAccum = null as IRidePointAccum;
-    records = null as RidePoint[];
-    speedsToBands = null as { [speed: number]: number };
+    public static colors() {
+        return ['#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00'];
+    }
+
+    public ridePointAccum = null as IRidePointAccum;
+    public records = null as RidePoint[];
+    public speedsToBands = null as { [speed: number]: number };
 
     constructor(ridePointAccum, records) {
         this.ridePointAccum = ridePointAccum;
@@ -37,10 +41,10 @@ class RideData implements IRideData {
     /**
      * @returns array of objects w/ {color, max, min}
      */
-    colorsToSpeedRanges() {
+    public colorsToSpeedRanges() {
         const speedsToBandEntries = Object.entries(this.speedsToBands);
 
-        var result = [];
+        const result = [];
         for (let band = 0; band < RideData.colors().length; band++) {
             const color = RideData.colors()[band];
 
@@ -58,15 +62,15 @@ class RideData implements IRideData {
         return result;
     }
 
-    recordsByBand(from = 0, to = this.records.length) {
-        var results: RecordByBand[] = [];
-        var resultsInCurrentBand: RidePoint[] = [];
-        var currentBand = this.speedsToBands[this.records[0].fSpeed];
+    public recordsByBand(from = 0, to = this.records.length) {
+        const results: RecordByBand[] = [];
+        let resultsInCurrentBand: RidePoint[] = [];
+        let currentBand = this.speedsToBands[this.records[0].fSpeed];
 
-        for (var i = from; i < to; i++) {
+        for (let i = from; i < to; i++) {
             const record = this.records[i];
             const recordBand = this.speedsToBands[this.records[i].fSpeed];
-            if (currentBand == recordBand) {
+            if (currentBand === recordBand) {
                 resultsInCurrentBand.push(record);
             } else {
                 const resultsInCurrentBandAsString = '[' + _.map(resultsInCurrentBand, r => r.latLng.googleString()).join(', ') + ']';
@@ -81,10 +85,6 @@ class RideData implements IRideData {
         }
 
         return results;
-    }
-
-    static colors() {
-        return ['#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00'];
     }
 }
 

@@ -1,21 +1,30 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
-        "moduleResolution": "node",
-        "lib": [
-            "esnext",
-            "dom",
-            "esnext.asynciterable"
-        ],
-        "noImplicitAny": false,
-        "allowSyntheticDefaultImports": true,
-        "module": "es6",
+        "outDir": "./built/",
+        "module": "esnext",
         "target": "es5",
-        "jsx": "preserve",
-        "allowJs": true
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "es5",
+            "es2015",
+            "es2016",
+            "esnext"
+        ],
+        "sourceMap": true,
+        "allowJs": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "rootDir": "src",
+        "noImplicitReturns": false,
+        "noImplicitThis": false,
+        "noImplicitAny": false,
+        "strictNullChecks": false,
+        "noUnusedLocals": false,
+        "allowSyntheticDefaultImports": true
     },
     "include": [
-        "src/**/*"
+        "./src/**/*"
     ],
     "exclude": [
         "node_modules"

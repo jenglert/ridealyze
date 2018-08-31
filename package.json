@@ -5,8 +5,12 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "start": "rimraf ./build && webpack --config webpack.config.server.js --mode development",
-    "tsc": "npx tsc"
+    "start": "webpack --config webpack.config.server.js --mode development",
+    "tsc": "npx tsc",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "build": "tsc && webpack --progress",
+    "clean": "rd /s/q built",
+    "prepare": "tsc && webpack --progress --config webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
@@ -46,8 +50,12 @@
     "rimraf": "^2.6.2",
     "start-server-webpack-plugin": "^2.2.5",
     "ts-jest": "^23.1.1",
+    "tslint": "^5.11.0",
+    "tslint-loader": "^3.6.0",
+    "url-loader": "^1.1.1",
     "webpack": "^4.13.0",
     "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.7",
     "webpack-hot-middleware": "^2.22.2",
     "webpack-node-externals": "^1.7.2"
   }

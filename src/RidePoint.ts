@@ -2,19 +2,8 @@ import LatLng from './LatLng';
 
 export default class RidePoint {
 
-    speed: number;
-    fSpeed: number;
-    latLng: LatLng;
-
-    constructor(speed: number, lat: number, lng: number) {
-        
-        this.speed = speed;
-        this.fSpeed = Math.floor(speed);
-        this.latLng = new LatLng(lat, lng);
-    }
-
     /*
-    {   
+    {
         timestamp: 2018-06-25T16:01:28.000Z,
         elapsed_time: 11112,
         position_lat: 40.72519308887422,
@@ -30,15 +19,25 @@ export default class RidePoint {
         right_torque_effectiveness: 0,
         left_pedal_smoothness: 42,
         right_pedal_smoothness: 0,
-        fractional_cadence: 0 
+        fractional_cadence: 0
     }
     */
-
-    static fromFitRecord(fitRecord: any) {
+    public static fromFitRecord(fitRecord: any) {
         return new RidePoint(
             fitRecord.speed,
             fitRecord.position_lat,
-            fitRecord.position_long
+            fitRecord.position_long,
         );
+    }
+
+    public speed: number;
+    public fSpeed: number;
+    public latLng: LatLng;
+
+    constructor(speed: number, lat: number, lng: number) {
+
+        this.speed = speed;
+        this.fSpeed = Math.floor(speed);
+        this.latLng = new LatLng(lat, lng);
     }
 }

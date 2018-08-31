@@ -7,17 +7,17 @@ import RidePoint from './RidePoint';
 import RideData, { IRideData } from './RideData';
 
 type ReadFitFunc = (filename: string) => Promise<IRideData>;
-export const readFit: ReadFitFunc = (filename) => {
+export const readFit: ReadFitFunc = filename => {
     const promise = new Promise<IRideData>((resolve, reject) => {
 
-        fs.readFile(filename, function (err, content) {
+        fs.readFile(filename, (err, content) => {
 
             if (err) {
                 reject(err);
             }
 
             // Create a EasyFit instance (options argument is optional)
-            var easyFit = new EasyFit({
+            const easyFit = new EasyFit({
                 force: true,
                 speedUnit: 'mph',
                 lengthUnit: 'mi',
@@ -27,20 +27,20 @@ export const readFit: ReadFitFunc = (filename) => {
             });
 
             // Parse your file
-            easyFit.parse(content, function (error, data) {
+            easyFit.parse(content, (error, data) => {
 
                 // Handle result of parse method
                 if (error) {
                     reject(error);
                 } else {
-                    var records: RidePoint[] = [];
+                    let records: RidePoint[] = [];
                     const rpa = new RidePointAccum();
 
-                    for (var i = 0; i < data.activity.sessions.length; i++) {
+                    for (let i = 0; i < data.activity.sessions.length; i++) {
                         const session = data.activity.sessions[i];
-                        for (var lapcnt = 0; lapcnt < session.laps.length; lapcnt++) {
+                        for (let lapcnt = 0; lapcnt < session.laps.length; lapcnt++) {
                             const lap = session.laps[lapcnt];
-                            records = [...records, ..._.map(lap.records, function (r) {
+                            records = [...records, ..._.map(lap.records, r => {
                                 const rp = new RidePoint(r.speed, r.position_lat, r.position_long);
                                 rpa.accum(rp);
                                 return rp;
@@ -57,7 +57,7 @@ export const readFit: ReadFitFunc = (filename) => {
     return promise;
 };
 
-type RawLatLng = {
+interface RawLatLng {
     latLng: {
         lat: number;
         lng: number;
@@ -70,12 +70,12 @@ interface BoundingBoxResult {
     avg: LatLng;
 }
 
-type BoundingBoxFunc = (latLngs: Array<RawLatLng>) => BoundingBoxResult;
-export const boundingBox: BoundingBoxFunc = (results) => {
+type BoundingBoxFunc = (latLngs: RawLatLng[]) => BoundingBoxResult;
+export const boundingBox: BoundingBoxFunc = results => {
     const min = { lat: 999, lng: 999 };
     const max = { lat: -999, lng: -999 };
 
-    for (var i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++) {
         const result = results[i].latLng;
         if (result.lat < min.lat) {
             min.lat = result.lat;
@@ -101,6 +101,6 @@ export const boundingBox: BoundingBoxFunc = (results) => {
     return {
         min: minObj,
         max: maxObj,
-        avg
+        avg,
     };
-}
+};

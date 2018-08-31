@@ -7,10 +7,10 @@ export interface IRidePointAccum {
 
 class RidePointAccum implements IRidePointAccum {
 
-    maxSpeed: number;
-    minSpeed: number;
-    speedDist: { [fSpeed: number]: number };
-    totalPoints: number;
+    public maxSpeed: number;
+    public minSpeed: number;
+    public speedDist: { [fSpeed: number]: number };
+    public totalPoints: number;
 
     constructor() {
         this.maxSpeed = 0;
@@ -20,7 +20,7 @@ class RidePointAccum implements IRidePointAccum {
     }
 
     // Note: Planning on mutating ridePoint in later iterations - I guess....
-    accum(ridePoint) {
+    public accum(ridePoint) {
         this.totalPoints++;
 
         if (ridePoint.speed > this.maxSpeed) {
@@ -42,13 +42,13 @@ class RidePointAccum implements IRidePointAccum {
     /**
      * @returns maps of speed -> bandIndex (0, 1, 2, ... MAX_BAND)
      */
-    bands(numBands) {
+    public bands(numBands) {
         const pointsPerBand = Math.floor(this.totalPoints / numBands);
-        var pointsUsedInBand = 0;
+        let pointsUsedInBand = 0;
         const finalResults = {};
-        var currentBand = 0;
+        let currentBand = 0;
 
-        for (var speed = Math.floor(this.minSpeed); speed <= Math.floor(this.maxSpeed); speed++) {
+        for (let speed = Math.floor(this.minSpeed); speed <= Math.floor(this.maxSpeed); speed++) {
             const pointsAtSpeed = this.speedDist[speed] || 0;
             pointsUsedInBand = pointsUsedInBand + pointsAtSpeed;
 

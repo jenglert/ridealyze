@@ -1,6 +1,6 @@
-import RidePoint from "../RidePoint";
+import RidePoint from '../RidePoint';
 
-const ridePointJson = {   
+const ridePointJson = {
     timestamp: '2018-06-25T16:01:28.000Z',
     elapsed_time: 11112,
     position_lat: 40.72519308887422,
@@ -16,7 +16,7 @@ const ridePointJson = {
     right_torque_effectiveness: 0,
     left_pedal_smoothness: 42,
     right_pedal_smoothness: 0,
-    fractional_cadence: 0 
+    fractional_cadence: 0,
 };
 
 describe('RidePoint', () => {
