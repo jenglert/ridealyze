@@ -34,7 +34,15 @@ describe('Ride Point Accum', () => {
                 18: 0,
                 19: 0,
                 20: 1,
-            });            
+            });
+        });
+
+        it('uses all the bands', () => {
+            const accumulator = accumSpeeds([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+            expect(accumulator.bands(10)).toEqual({
+                0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9
+            });
         });
     });
 });
@@ -47,6 +55,6 @@ const accumSpeeds = (speeds: number[]): RidePointAccum => {
     return accumulator;
 };
 
-const makeRidePoint = (speed= 20, lat = 19.5, lng = 12.3) => {
+const makeRidePoint = (speed = 20, lat = 19.5, lng = 12.3) => {
     return new RidePoint(speed, lat, lng);
 };

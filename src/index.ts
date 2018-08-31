@@ -10,8 +10,10 @@ const anyModule = module as any;
 
 if (anyModule.hot) {
     anyModule.hot.accept('./server', () => {
-        server.removeListener('request', currentApp)
-        server.on('request', app)
-        currentApp = app
+        console.log('🔁  HMR Reloading `./server`...');
+        server.removeListener('request', currentApp);
+        const newApp = require('./server').default
+        server.on('request', newApp);
+        currentApp = newApp;
     })
 }

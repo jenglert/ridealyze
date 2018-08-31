@@ -2,22 +2,22 @@ import _ from 'lodash';
 import { IRidePointAccum } from './RidePointAccum';
 import RidePoint from './RidePoint';
 
-interface IColorToSpeedBand { 
+interface IColorToSpeedBand {
     color: string;
     max: number;
     min: number;
 }
 
-interface RecordByBand { 
+interface RecordByBand {
     color: string;
     recordCount: number;
     googleString: string;
 }
 
-export interface IRideData { 
+export interface IRideData {
     ridePointAccum: IRidePointAccum;
     records: RidePoint[];
-    speedsToBands: {[speed: number]: number};
+    speedsToBands: { [speed: number]: number };
 
     colorsToSpeedRanges: () => IColorToSpeedBand[];
     recordsByBand: (from: number, to: number) => RecordByBand[];
@@ -26,7 +26,7 @@ export interface IRideData {
 class RideData implements IRideData {
     ridePointAccum = null as IRidePointAccum;
     records = null as RidePoint[];
-    speedsToBands = null as {[speed: number]: number};
+    speedsToBands = null as { [speed: number]: number };
 
     constructor(ridePointAccum, records) {
         this.ridePointAccum = ridePointAccum;
@@ -38,29 +38,24 @@ class RideData implements IRideData {
      * @returns array of objects w/ {color, max, min}
      */
     colorsToSpeedRanges() {
-        var finalResult = RideData.colors().map(color => {
-            return {
-                color: color,
-                max: -1,
-                min: 9999999,
-            }
-        });
-        var speedsToBands = this.speedsToBands;
+        const speedsToBandEntries = Object.entries(this.speedsToBands);
 
-        Object.keys(speedsToBands).forEach(function (fSpeed) {
-            const band = speedsToBands[fSpeed];
-            const fSpeedNum = Number.parseFloat(fSpeed); // Remove the cast
+        var result = [];
+        for (let band = 0; band < RideData.colors().length; band++) {
+            const color = RideData.colors()[band];
 
-            if (fSpeedNum > finalResult[band].max) {
-                finalResult[band].max = fSpeedNum;
-            }
+            const speedsInBand = speedsToBandEntries
+                .filter(pair => pair[1] === band)
+                .map(pair => pair[0]);
 
-            if (fSpeedNum < finalResult[band].min) {
-                finalResult[band].min = fSpeedNum;
-            }
-        });
+            result.push({
+                color,
+                max: _.max(speedsInBand),
+                min: _.min(speedsInBand),
+            });
+        }
 
-        return finalResult;
+        return result;
     }
 
     recordsByBand(from = 0, to = this.records.length) {

@@ -41,7 +41,6 @@ export const readFit: ReadFitFunc = (filename) => {
                         for (var lapcnt = 0; lapcnt < session.laps.length; lapcnt++) {
                             const lap = session.laps[lapcnt];
                             records = [...records, ..._.map(lap.records, function (r) {
-                                console.log('r', r);
                                 const rp = new RidePoint(r.speed, r.position_lat, r.position_long);
                                 rpa.accum(rp);
                                 return rp;
