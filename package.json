@@ -8,9 +8,6 @@
     "start": "webpack --config webpack.config.server.js --mode development",
     "tsc": "npx tsc",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "build": "tsc && webpack --progress",
-    "clean": "rd /s/q built",
-    "prepare": "tsc && webpack --progress --config webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
