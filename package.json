@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "webpack --config webpack.config.server.js --mode development",
     "tsc": "npx tsc",
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
   },
   "repository": {
     "type": "git",
