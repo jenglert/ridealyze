@@ -9,8 +9,18 @@
         /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 
+       .title { 
+           width: 100%;
+           height: 80px;
+           border-bottom: 2px solid #CCC;
+           font-family: Helvetica;
+           font-size: 24px;
+           background-color: #EEE;
+       }
+
         #map {
             height: 100%;
+            width: 100%;
         }
 
         #legend { 
@@ -39,6 +49,7 @@
 </head>
 
 <body>
+    <%- include('partials/title'); %>
     <div id="map"></div>
     <div id="legend"><h4>Legend</h4></div>
     <script>
@@ -73,7 +84,7 @@
             var icon = {
                 path: arrowSvg, 
                 rotation: 270, 
-                strokeOpacity: 0.75, 
+                strokeOpacity: 0.75,    
                 anchor: new google.maps.Point(8, 8)};
             
         
