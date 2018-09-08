@@ -21,7 +21,7 @@ export const readFit: ReadFitFunc = filename => {
                 force: true,
                 speedUnit: 'mph',
                 lengthUnit: 'mi',
-                temperatureUnit: 'kelvin',
+                temperatureUnit: 'fahrenheit',
                 elapsedRecordField: true,
                 mode: 'cascade',
             });
